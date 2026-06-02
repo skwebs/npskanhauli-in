@@ -125,9 +125,14 @@ const Footer = () => {
         </div>
 
         <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-slate-500 text-sm">
-            © {currentYear} {schoolInfo.name}. All rights reserved.
-          </p>
+          <div className="flex flex-col items-center md:items-start gap-2">
+            <p className="text-slate-500 text-sm">
+              © {currentYear} {schoolInfo.name}. All rights reserved.
+            </p>
+            <p className="text-slate-600 text-[10px] font-medium tracking-wider uppercase">
+              Website by <a href="https://skwebs.github.io" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">SKWebs</a>
+            </p>
+          </div>
           <div className="flex gap-8 text-xs text-slate-500 font-medium">
              <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
              <Link href="/terms-conditions" className="hover:text-white transition-colors">Terms & Conditions</Link>

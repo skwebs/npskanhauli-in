@@ -40,7 +40,7 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Top Bar - Desktop/Large Tablet Only */}
+      {/* Top Bar - Desktop Only */}
       <div className={cn(
         "bg-primary text-white py-2.5 px-4 hidden lg:block relative z-[160] transition-all duration-300",
         isScrolled ? "h-0 opacity-0 overflow-hidden" : "h-10 opacity-100"
@@ -71,7 +71,7 @@ const Navbar = () => {
         )}
       >
         <div className="container mx-auto px-4 md:px-6">
-          <nav className="flex items-center justify-between gap-2 md:gap-4">
+          <nav className="flex items-center justify-between gap-2">
             {/* Logo and Brand */}
             <Link href="/" className="flex items-center gap-2 md:gap-4 shrink-0 group min-w-0">
               <div className="relative w-10 h-10 md:w-14 md:h-14 shrink-0">
@@ -115,7 +115,7 @@ const Navbar = () => {
                   </li>
                 ))}
               </ul>
-              <Button variant="accent" size="sm" href="/contact" className="font-black px-6 py-5 rounded-lg text-[11px] uppercase tracking-widest">
+              <Button variant="accent" size="sm" href="/contact" className="font-black px-6 py-5 rounded-lg text-[11px] uppercase tracking-widest whitespace-nowrap">
                 Admissions Open
               </Button>
             </div>
@@ -142,54 +142,38 @@ const Navbar = () => {
       >
         <div
           className={cn(
-            "absolute top-0 right-0 w-full sm:w-[400px] h-full bg-white shadow-2xl transition-transform duration-500 ease-out flex flex-col",
+            "absolute top-0 right-0 w-full h-full bg-white shadow-2xl transition-transform duration-500 ease-out flex flex-col",
             isOpen ? "translate-x-0" : "translate-x-full"
           )}
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Menu Content - Offset by header height */}
-          <div className="flex-grow pt-24 md:pt-32 p-6 flex flex-col h-full overflow-y-auto">
-            <div className="mb-8 pb-6 border-b border-slate-100">
-              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-4 px-2">Navigation</p>
-              <ul className="flex flex-col gap-0.5">
-                {navLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link
-                      href={link.href}
-                      className={cn(
-                        "text-2xl font-bold tracking-tight block py-4 px-2 rounded-xl transition-colors",
-                        pathname === link.href ? "bg-slate-50 text-secondary" : "text-primary hover:bg-slate-50"
-                      )}
-                    >
-                      {link.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Menu Content - Simplified & Clean */}
+          <div className="flex-grow pt-24 pb-8 px-6 flex flex-col h-full overflow-y-auto">
+            <ul className="flex flex-col gap-1 mb-10">
+              {navLinks.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className={cn(
+                      "text-xl font-semibold tracking-tight block py-3 px-4 rounded-xl transition-colors",
+                      pathname === link.href ? "bg-slate-50 text-secondary" : "text-primary hover:bg-slate-50"
+                    )}
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
             
-            <div className="space-y-4 px-2">
-              <Button variant="accent" size="lg" href="/contact" className="w-full text-lg py-8 font-black rounded-xl shadow-lg shadow-accent/10">
-                Admissions Open 2026-27
+            <div className="space-y-6">
+              <Button variant="accent" size="lg" href="/contact" className="w-full text-lg py-8 font-black rounded-xl whitespace-nowrap">
+                Admissions Open
               </Button>
-              <Button variant="outline" size="lg" href="/about" className="w-full text-lg py-8 font-black rounded-xl border-slate-200">
-                Learn More
-              </Button>
-            </div>
-            
-            <div className="mt-auto space-y-8 pt-10 px-2 pb-6">
-               <div className="p-6 bg-slate-50 rounded-2xl space-y-4">
-                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Direct Contact</p>
-                 <div className="flex gap-4 items-center">
-                   <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-secondary shrink-0">
-                     <Phone size={20} />
-                   </div>
-                   <div>
-                     <p className="text-primary font-bold text-lg leading-none mb-1">{schoolInfo.contact.phone[0]}</p>
-                     <p className="text-slate-500 text-[10px] uppercase font-bold tracking-wider">Support Available Mon-Sat</p>
-                   </div>
-                 </div>
-               </div>
+              
+              <div className="flex items-center justify-center gap-3 text-primary font-bold text-lg pt-4">
+                <Phone size={20} className="text-secondary" />
+                <span>{schoolInfo.contact.phone[0]}</span>
+              </div>
             </div>
           </div>
         </div>
