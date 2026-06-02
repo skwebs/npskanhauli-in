@@ -143,11 +143,11 @@ const Footer = () => {
           </div>
 
           {/* Legal Links */}
-          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-xs text-slate-500 font-medium">
+          <div className="flex flex-row items-center justify-center md:justify-end gap-4 sm:gap-8 text-[10px] sm:text-xs text-slate-500 font-medium whitespace-nowrap">
              <Link href="/privacy-policy" className="hover:text-white transition-all hover:underline underline-offset-8 decoration-white/20">
                Privacy Policy
              </Link>
-             <span className="hidden sm:block w-1 h-1 rounded-full bg-white/10" />
+             <span className="w-1 h-1 rounded-full bg-white/10" />
              <Link href="/terms-and-conditions" className="hover:text-white transition-all hover:underline underline-offset-8 decoration-white/20">
                Terms & Conditions
              </Link>
