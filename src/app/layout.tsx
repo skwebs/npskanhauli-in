@@ -68,7 +68,7 @@ export default function RootLayout({
     >
       <body className="font-sans antialiased text-text bg-white min-h-screen flex flex-col">
         <Navbar />
-        <main className="flex-grow pt-[80px] lg:pt-[130px]">
+        <main className="flex-grow">
           {children}
         </main>
         <Footer />

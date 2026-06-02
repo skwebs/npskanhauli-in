@@ -32,19 +32,17 @@ const Navbar = () => {
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      setIsScrolled(window.scrollY > 10);
     };
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Removed body overflow lock to allow scrolling when sidebar is open
-
   return (
     <>
-      {/* Top Bar - Desktop Only */}
+      {/* Top Bar - Desktop/Large Tablet Only */}
       <div className={cn(
-        "bg-primary text-white py-2 px-4 transition-all duration-300 hidden lg:block",
+        "bg-primary text-white py-2.5 px-4 hidden lg:block relative z-[160] transition-all duration-300",
         isScrolled ? "h-0 opacity-0 overflow-hidden" : "h-10 opacity-100"
       )}>
         <div className="container mx-auto flex justify-between items-center text-[10px] font-black uppercase tracking-[0.2em]">
@@ -66,46 +64,45 @@ const Navbar = () => {
 
       <header
         className={cn(
-          "fixed w-full z-[100] transition-all duration-500",
+          "fixed w-full z-[150] transition-all duration-300 bg-white border-b border-slate-100",
           isScrolled 
-            ? "top-0 bg-white shadow-[0_4px_20px_rgba(0,0,0,0.08)] py-2 border-b border-slate-100" 
-            : "top-0 lg:top-10 bg-white py-4 border-b border-slate-100"
+            ? "top-0 shadow-lg py-2" 
+            : "top-0 lg:top-10 py-3 md:py-4"
         )}
       >
         <div className="container mx-auto px-4 md:px-6">
-          <nav className="flex items-center justify-between gap-4">
+          <nav className="flex items-center justify-between gap-2 md:gap-4">
             {/* Logo and Brand */}
-            <Link href="/" className="flex items-center gap-4 shrink-0 group">
-              <div className="relative w-12 h-12 md:w-16 md:h-16 shrink-0 transition-transform duration-500">
+            <Link href="/" className="flex items-center gap-2 md:gap-4 shrink-0 group min-w-0">
+              <div className="relative w-10 h-10 md:w-14 md:h-14 shrink-0">
                 <Image
                   src="/images/logo/logo.svg"
                   alt={schoolInfo.name}
                   fill
                   className="object-contain"
                   priority
-                  sizes="(max-width: 768px) 48px, 64px"
                 />
               </div>
-              <div className="flex flex-col">
-                <span className="text-primary font-black text-xl md:text-2xl tracking-tight leading-none whitespace-nowrap">
+              <div className="flex flex-col min-w-0">
+                <span className="text-primary font-black text-sm sm:text-base md:text-xl lg:text-2xl tracking-tight leading-none whitespace-nowrap">
                   {schoolInfo.name}
                 </span>
-                <span className="text-secondary text-[10px] md:text-xs font-black uppercase tracking-[0.15em] mt-1.5 flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
+                <span className="text-secondary text-[8px] sm:text-[9px] md:text-xs font-black uppercase tracking-[0.1em] md:tracking-[0.15em] mt-1 flex items-center gap-1 sm:gap-1.5 whitespace-nowrap">
+                  <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-accent animate-pulse shrink-0" />
                   26+ Years of Excellence
                 </span>
               </div>
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-10">
-              <ul className="flex items-center gap-8">
+            <div className="hidden lg:flex items-center gap-8">
+              <ul className="flex items-center gap-6">
                 {navLinks.map((link) => (
                   <li key={link.name}>
                     <Link
                       href={link.href}
                       className={cn(
-                        "text-[11px] font-bold uppercase tracking-[0.2em] transition-all hover:text-secondary relative group",
+                        "text-[10px] font-bold uppercase tracking-[0.2em] transition-all hover:text-secondary relative group",
                         pathname === link.href ? "text-secondary" : "text-primary"
                       )}
                     >
@@ -118,82 +115,85 @@ const Navbar = () => {
                   </li>
                 ))}
               </ul>
-              <Button variant="accent" size="sm" href="/contact" className="font-black px-8 py-6 rounded-lg shadow-md hover:shadow-lg transition-all">
+              <Button variant="accent" size="sm" href="/contact" className="font-black px-6 py-5 rounded-lg text-[11px] uppercase tracking-widest">
                 Admissions Open
               </Button>
             </div>
 
             {/* Mobile Menu Toggle */}
             <button
-              className="lg:hidden w-12 h-12 flex items-center justify-center rounded-xl border border-slate-200 text-primary z-[110] transition-colors hover:bg-slate-50"
+              className="lg:hidden w-10 h-10 flex items-center justify-center rounded-lg border border-slate-200 text-primary z-[170] bg-white transition-colors hover:bg-slate-50"
               onClick={() => setIsOpen(!isOpen)}
               aria-label={isOpen ? "Close Menu" : "Open Menu"}
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </nav>
         </div>
+      </header>
 
-        {/* Mobile Menu Sidebar (Drawer) */}
+      {/* Mobile Menu Sidebar (Drawer) */}
+      <div
+        className={cn(
+          "fixed inset-0 bg-slate-900/25 z-[140] lg:hidden transition-all duration-300 ease-in-out",
+          isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+        )}
+        onClick={() => setIsOpen(false)}
+      >
         <div
           className={cn(
-            "fixed inset-0 bg-slate-900/35 backdrop-blur-[2px] z-[105] lg:hidden transition-all duration-300",
-            isOpen ? "opacity-100 visible" : "opacity-0 invisible"
+            "absolute top-0 right-0 w-full sm:w-[400px] h-full bg-white shadow-2xl transition-transform duration-500 ease-out flex flex-col",
+            isOpen ? "translate-x-0" : "translate-x-full"
           )}
-          onClick={() => setIsOpen(false)}
+          onClick={(e) => e.stopPropagation()}
         >
-          <div
-            className={cn(
-              "absolute top-0 right-0 w-full sm:w-[420px] max-w-full h-full bg-white shadow-2xl transition-transform duration-500 ease-out flex flex-col",
-              isOpen ? "translate-x-0" : "translate-x-full"
-            )}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="p-8 pt-28 flex flex-col h-full">
-              <div className="mb-10 pb-6 border-b border-slate-100">
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-4">Navigation</p>
-                <ul className="flex flex-col gap-1">
-                  {navLinks.map((link) => (
-                    <li key={link.name}>
-                      <Link
-                        href={link.href}
-                        className={cn(
-                          "text-2xl font-bold tracking-tight block py-4 transition-colors",
-                          pathname === link.href ? "text-secondary" : "text-primary hover:text-secondary"
-                        )}
-                      >
-                        {link.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              
-              <div className="space-y-4">
-                <Button variant="accent" size="lg" href="/contact" className="w-full text-lg py-8 font-black rounded-xl">
-                  Admissions Open 2026-27
-                </Button>
-                <Button variant="outline" size="lg" href="/about" className="w-full text-lg py-8 font-black rounded-xl">
-                  Learn More
-                </Button>
-              </div>
-              
-              <div className="mt-auto space-y-6 pb-6">
-                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Get in Touch</p>
+          {/* Menu Content - Offset by header height */}
+          <div className="flex-grow pt-24 md:pt-32 p-6 flex flex-col h-full overflow-y-auto">
+            <div className="mb-8 pb-6 border-b border-slate-100">
+              <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400 mb-4 px-2">Navigation</p>
+              <ul className="flex flex-col gap-0.5">
+                {navLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        "text-2xl font-bold tracking-tight block py-4 px-2 rounded-xl transition-colors",
+                        pathname === link.href ? "bg-slate-50 text-secondary" : "text-primary hover:bg-slate-50"
+                      )}
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            <div className="space-y-4 px-2">
+              <Button variant="accent" size="lg" href="/contact" className="w-full text-lg py-8 font-black rounded-xl shadow-lg shadow-accent/10">
+                Admissions Open 2026-27
+              </Button>
+              <Button variant="outline" size="lg" href="/about" className="w-full text-lg py-8 font-black rounded-xl border-slate-200">
+                Learn More
+              </Button>
+            </div>
+            
+            <div className="mt-auto space-y-8 pt-10 px-2 pb-6">
+               <div className="p-6 bg-slate-50 rounded-2xl space-y-4">
+                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Direct Contact</p>
                  <div className="flex gap-4 items-center">
-                   <div className="w-12 h-12 rounded-xl bg-slate-50 flex items-center justify-center text-secondary shrink-0">
+                   <div className="w-12 h-12 rounded-xl bg-white shadow-sm flex items-center justify-center text-secondary shrink-0">
                      <Phone size={20} />
                    </div>
                    <div>
-                     <p className="text-primary font-bold text-lg">{schoolInfo.contact.phone[0]}</p>
-                     <p className="text-slate-500 text-xs">Available Mon-Sat 8AM-3PM</p>
+                     <p className="text-primary font-bold text-lg leading-none mb-1">{schoolInfo.contact.phone[0]}</p>
+                     <p className="text-slate-500 text-[10px] uppercase font-bold tracking-wider">Support Available Mon-Sat</p>
                    </div>
                  </div>
-              </div>
+               </div>
             </div>
           </div>
         </div>
-      </header>
+      </div>
     </>
   );
 };
