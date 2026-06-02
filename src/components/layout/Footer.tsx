@@ -124,18 +124,33 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex flex-col items-center md:items-start gap-2">
+        <div className="pt-10 border-t border-white/10 flex flex-col md:flex-row justify-between items-center md:items-start gap-8 text-center md:text-left">
+          {/* Copyright and Credit */}
+          <div className="flex flex-col gap-4 md:gap-2">
             <p className="text-slate-500 text-sm">
               © {currentYear} {schoolInfo.name}. All rights reserved.
             </p>
-            <p className="text-slate-600 text-[10px] font-medium tracking-wider uppercase">
-              Website by <a href="https://skwebs.github.io" target="_blank" rel="noopener noreferrer" className="hover:text-accent transition-colors">SKWebs</a>
-            </p>
+            <a 
+              href="https://skwebs.github.io" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Website Designed and Developed by SKWebs (opens in a new tab)"
+              className="text-slate-400 text-sm font-medium hover:text-accent hover:underline underline-offset-4 transition-all duration-200 group inline-flex items-center justify-center md:justify-start gap-1.5"
+            >
+              Website Designed & Developed by SKWebs
+              <span className="text-[11px] opacity-70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-200">↗</span>
+            </a>
           </div>
-          <div className="flex gap-8 text-xs text-slate-500 font-medium">
-             <Link href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</Link>
-             <Link href="/terms-conditions" className="hover:text-white transition-colors">Terms & Conditions</Link>
+
+          {/* Legal Links */}
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-8 text-xs text-slate-500 font-medium">
+             <Link href="/privacy-policy" className="hover:text-white transition-all hover:underline underline-offset-8 decoration-white/20">
+               Privacy Policy
+             </Link>
+             <span className="hidden sm:block w-1 h-1 rounded-full bg-white/10" />
+             <Link href="/terms-and-conditions" className="hover:text-white transition-all hover:underline underline-offset-8 decoration-white/20">
+               Terms & Conditions
+             </Link>
           </div>
         </div>
       </div>
